@@ -1,6 +1,6 @@
 # Truffle Deploy Registry
 
-[![Coverage Status](https://coveralls.io/repos/github/asselstine/truffle-deploy-registry/badge.svg?branch=master)](https://coveralls.io/github/asselstine/truffle-deploy-registry?branch=master) [![Tests](https://travis-ci.org/asselstine/truffle-deploy-registry.svg?branch=master)](https://travis-ci.org/asselstine/truffle-deploy-registry)
+[![Coverage Status](https://coveralls.io/repos/github/MedCredits/truffle-deploy-registry/badge.svg?branch=master)](https://coveralls.io/github/MedCredits/truffle-deploy-registry?branch=master) [![Tests](https://travis-ci.org/MedCredits/truffle-deploy-registry.svg?branch=master)](https://travis-ci.org/MedCredits/truffle-deploy-registry)
 
 Store deployed contract addresses separately from Truffle artifacts, and merge the addresses into artifacts.
 
