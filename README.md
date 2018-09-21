@@ -1,5 +1,8 @@
 # Truffle Deploy Registry
 
+Coverage ![alt text](https://coveralls.io/repos/github/asselstine/truffle-deploy-registry/badge.svg?branch=master "Coveralls")
+Tests ![alt text](https://travis-ci.org/asselstine/truffle-deploy-registry.svg?branch=master "Travis CI")
+
 Store deployed contract addresses separately from Truffle artifacts, and merge the addresses into artifacts.
 
 This module is a complete re-write (with comprehensive tests!) of [truffle-migrate-off-chain](https://github.com/asselstine/truffle-migrate-off-chain)
@@ -46,7 +49,7 @@ To add new entries, call the `append` function:
 ```javascript
 // migrations/1_initial_migration.js
 
-const append = require('truffle-deploy-registry').append
+var append = require('truffle-deploy-registry').append
 var Migrations = artifacts.require("./Migrations.sol");
 
 module.exports = function(deployer, network) {

@@ -4,7 +4,8 @@
   "description": "Store deployed contract addresses separately from Truffle artifacts.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest --config=jest.config.js --watch"
+    "test": "jest --config=jest.config.js",
+    "test-watch": "jest --config=jest.config.js --watch"
   },
   "bin": {
     "apply-registry": "./lib/command.js"
