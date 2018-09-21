@@ -1,0 +1,13 @@
+{
+  "contractName": "Contract2",
+  "abi": [],
+  "networks": {
+    "1": {
+      "events": {},
+      "links": {},
+      "address": "0x3383c29542b8c96eafed98c4aafe789ddb256e19",
+      "transactionHash": "0xbef1787981c4512c8bc8acf59e6cbe9c23c9c5ea269b193ec71aae9f9c57c997"
+    }
+  },
+  "updatedAt": "2018-09-19T21:37:52.903Z"
+}
