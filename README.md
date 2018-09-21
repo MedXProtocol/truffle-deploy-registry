@@ -25,11 +25,11 @@ Truffle Deploy Registry works in two stages:
 
 Truffle Deploy Registry stores contract addresses in JSON files in the `networks/` directory.  For example, if you deploy to `mainnet` and `ropsten` your networks directory may look like:
 
-`
+```
 networks/
   1.json
   3.json
-`
+```
 
 Each of these files contains an array of deployment entries.  New entries are appended.  Each entry must store the contractName and address, but is otherwise unstructured so that the user can add additional information.  A network config looks something like:
 
