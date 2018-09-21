@@ -1,8 +1,8 @@
 # Truffle Deploy Registry
 
-Store deployed contract addresses separately from Truffle artifacts.
+Store deployed contract addresses separately from Truffle artifacts, and merge the addresses into artifacts.
 
-This module is a complete re-write (with comprehensive tests!) of [truffle-deploy-registry](here)
+This module is a complete re-write (with comprehensive tests!) of [truffle-migrate-off-chain](https://github.com/asselstine/truffle-migrate-off-chain)
 
 # Motivation
 
