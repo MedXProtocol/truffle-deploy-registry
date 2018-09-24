@@ -10,6 +10,8 @@ This module is a complete re-write (with comprehensive tests!) of [truffle-migra
 
 Truffle is a fantastic tool for creating and deploying smart contracts.   I wanted a way to commit deployed contract addresses as part of the repository without committing the Truffle artifacts, as they contain paths specific to the developer's filesystem.
 
+Having the addresses separated by network allows us to ignore the local environment but commit the testnet and mainnet environments to the repository.  Our continuous deployment server can then re-compile the artifacts and merge in the deployed addresses.
+
 # Setup
 
 ```
@@ -39,7 +41,7 @@ Each of these files contains an array of deployment entries.  New entries are ap
 # networks/1.json
 [
   { contractName: 'Ownable', address: '0x3383c29542b8c96eafed98c4aafe789ddb256e19' },
-  { contractName: 'Ownable', address: '0x3383c29542b8c96eafed98c4aafe789ddb256e19' }
+  { contractName: 'Registry', address: '0x8fa5944b15c1ab5db6bcfb0c888bdc6b242f0fa6' }
 ]
 ```
 
@@ -78,8 +80,8 @@ networks/
 
 ```json
 [
-  { "contractName": "Contract2", "address": "0x2222" },
-  { "contractName": "Contract2", "address": "0x4444" },
+  { "contractName": "Contract2", "address": "0x2222222222222222222222222222222222222222" },
+  { "contractName": "Contract2", "address": "0x4444444444444444444444444444444444444444" },
 ]
 ```
 
@@ -87,7 +89,7 @@ networks/
 
 ```json
 [
-  { "contractName": "Contract2", "address": "0x8888" }
+  { "contractName": "Contract2", "address": "0x8888888888888888888888888888888888888888" }
 ]
 ```
 
@@ -127,7 +129,7 @@ Your artifact will now be updated with the networks:
     "1": {
       "events": {},
       "links": {},
-      "address": "0x4444",
+      "address": "0x4444444444444444444444444444444444444444",
       "transactionHash": ""
     },
     "2": {
@@ -139,7 +141,7 @@ Your artifact will now be updated with the networks:
     "3": {
       "events": {},
       "links": {},
-      "address": "0x8888",
+      "address": "0x8888888888888888888888888888888888888888",
       "transactionHash": ""
     },
   },
@@ -154,3 +156,7 @@ apply-registry build/contracts build/output
 ```
 
 And the merged artifacts will appear in `build/output`
+
+# Future Work
+
+Eventually it would be best to create entirely separate artifacts that include the bytecode and abi, rather than having to merge into the compiled artifact.  Another possibility is to integrate with EthPM and treat each deployment as a package.
