@@ -15,7 +15,7 @@ Having the addresses separated by network allows us to ignore the local environm
 # Setup
 
 ```
-npm install --save-dev truffle-deploy-registry
+$ npm install --save-dev truffle-deploy-registry
 ```
 
 # Usage
@@ -65,7 +65,7 @@ module.exports = function(deployer, network) {
 After Truffle compiles your smart contracts, you can merge the deployed addresses into the artifact by calling `apply-registry` with the path to the artifacts.
 
 ```sh
-apply-registry build/contracts
+$ apply-registry build/contracts
 ```
 
 This will pull in all of the network configs and add *the most recent* address for each contract by name from each configuration.  For example, if you have two configs:
@@ -114,7 +114,7 @@ networks/
 Then run `apply-registry`:
 
 ```sh
-apply-registry build/contracts
+$ apply-registry build/contracts
 ```
 
 Your artifact will now be updated with the networks:
@@ -152,10 +152,20 @@ Your artifact will now be updated with the networks:
 If you wish, you may also determine the output directory using the second argument:
 
 ```sh
-apply-registry build/contracts build/output
+$ apply-registry build/contracts build/output
 ```
 
-And the merged artifacts will appear in `build/output`
+And the merged artifacts will appear in `build/output`.
+
+I recommend you create a new script entry in `package.json` so that you can easily combine compilation with merging:
+
+```json
+{
+  "scripts": {
+    "compile": "truffle compile && apply-registry build/contracts"
+  }
+}
+```
 
 # Future Work
 
