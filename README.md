@@ -40,12 +40,27 @@ Each of these files contains an array of deployment entries.  New entries are ap
 ```
 # networks/1.json
 [
-  { contractName: 'Ownable', address: '0x3383c29542b8c96eafed98c4aafe789ddb256e19' },
-  { contractName: 'Registry', address: '0x8fa5944b15c1ab5db6bcfb0c888bdc6b242f0fa6' }
+  { contractName: 'Ownable', address: '0x3383c29542b8c96eafed98c4aafe789ddb256e19', transactionHash: '0x0b71a01c6da8e02359b533f16b97a590be8ca59480151ba1034a264a2981261f' },
+  { contractName: 'Registry', address: '0x8fa5944b15c1ab5db6bcfb0c888bdc6b242f0fa6', transactionHash: '0x84a9fe87a9fd8f7ae98fa72359b533f16b97a590be8ca59480151ba1034a2632' }
 ]
 ```
 
-To add new entries, call the `append` function:
+To add new entries call the `appendInstance` function:
+
+```javascript
+// migrations/1_initial_migration.js
+
+var appendInstance = require('truffle-deploy-registry').appendInstance
+var Migrations = artifacts.require("./Migrations.sol");
+
+module.exports = function(deployer, network) {
+  deployer.deploy(Migrations).then((migrationsInstance) => {
+    return appendInstance(deployer.network_id, migrationsInstance)
+  })
+}
+```
+
+Alternatively, you can use the lower-level `append` function:
 
 ```javascript
 // migrations/1_initial_migration.js
@@ -54,8 +69,12 @@ var append = require('truffle-deploy-registry').append
 var Migrations = artifacts.require("./Migrations.sol");
 
 module.exports = function(deployer, network) {
-  deployer.deploy(Migrations).then(() => {
-    return append(deployer.network_id, { contractName: 'Migrations', address: Migrations.address })
+  deployer.deploy(Migrations).then((migrationsInstance) => {
+    return append(deployer.network_id, {
+      contractName: 'Migrations',
+      address: Migrations.address,
+      transactionHash: migrationsInstance.transactionHash
+    })
   })
 }
 ```
@@ -80,8 +99,8 @@ networks/
 
 ```json
 [
-  { "contractName": "Contract2", "address": "0x2222222222222222222222222222222222222222" },
-  { "contractName": "Contract2", "address": "0x4444444444444444444444444444444444444444" },
+  { "contractName": "Contract2", "address": "0x2222222222222222222222222222222222222222", "transactionHash": "0x0b71a01c6da8e02359b533f16b97a590be8ca59480151ba1034a264a2981261f" },
+  { "contractName": "Contract2", "address": "0x4444444444444444444444444444444444444444", "transactionHash": "0x21afe897aefa98eaf79ae6f87ae6f87678e6f39480151ba1034a264a29853124"  },
 ]
 ```
 
@@ -89,7 +108,7 @@ networks/
 
 ```json
 [
-  { "contractName": "Contract2", "address": "0x8888888888888888888888888888888888888888" }
+  { "contractName": "Contract2", "address": "0x8888888888888888888888888888888888888888", "transactionHash": "0x99afe897aefa98eaf79ae6f87ae6f87678e6f39480151ba1034a264a29853124" }
 ]
 ```
 
@@ -130,7 +149,7 @@ Your artifact will now be updated with the networks:
       "events": {},
       "links": {},
       "address": "0x4444444444444444444444444444444444444444",
-      "transactionHash": ""
+      "transactionHash": "0x21afe897aefa98eaf79ae6f87ae6f87678e6f39480151ba1034a264a29853124"
     },
     "2": {
       "events": {},
@@ -142,7 +161,7 @@ Your artifact will now be updated with the networks:
       "events": {},
       "links": {},
       "address": "0x8888888888888888888888888888888888888888",
-      "transactionHash": ""
+      "transactionHash": "0x99afe897aefa98eaf79ae6f87ae6f87678e6f39480151ba1034a264a29853124"
     },
   },
   "updatedAt": "2018-09-19T21:37:52.903Z"
