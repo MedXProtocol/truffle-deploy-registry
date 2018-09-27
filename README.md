@@ -55,7 +55,7 @@ var Migrations = artifacts.require("./Migrations.sol");
 
 module.exports = function(deployer, network) {
   deployer.deploy(Migrations).then((migrationsInstance) => {
-    return appendInstance(deployer.network_id, migrationsInstance)
+    return appendInstance(migrationsInstance)
   })
 }
 ```
