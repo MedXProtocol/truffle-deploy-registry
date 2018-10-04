@@ -50,12 +50,14 @@ To add new entries call the `appendInstance` function:
 ```javascript
 // migrations/1_initial_migration.js
 
-var appendInstance = require('truffle-deploy-registry').appendInstance
+var tdr = require('truffle-deploy-registry')
 var Migrations = artifacts.require("./Migrations.sol");
 
 module.exports = function(deployer, network) {
   deployer.deploy(Migrations).then((migrationsInstance) => {
-    return appendInstance(migrationsInstance)
+    if (!tdr.isDryRunNetworkName(network)) {
+      return tdr.appendInstance(migrationsInstance)
+    }
   })
 }
 ```
@@ -65,19 +67,23 @@ Alternatively, you can use the lower-level `append` function:
 ```javascript
 // migrations/1_initial_migration.js
 
-var append = require('truffle-deploy-registry').append
+var tdr = require('truffle-deploy-registry')
 var Migrations = artifacts.require("./Migrations.sol");
 
 module.exports = function(deployer, network) {
   deployer.deploy(Migrations).then((migrationsInstance) => {
-    return append(deployer.network_id, {
-      contractName: 'Migrations',
-      address: Migrations.address,
-      transactionHash: migrationsInstance.transactionHash
-    })
+    if (!tdr.isDryRunNetworkName(network)) {
+      return tdr.append(deployer.network_id, {
+        contractName: 'Migrations',
+        address: Migrations.address,
+        transactionHash: migrationsInstance.transactionHash
+      })  
+    }
   })
 }
 ```
+
+Note the use of `isDryRunNetworkName` to prevent appending to the registry when doing a dry run.
 
 ## 2. Merging network addresses into artifacts
 
