@@ -71,9 +71,9 @@ var tdr = require('truffle-deploy-registry')
 var Migrations = artifacts.require("./Migrations.sol");
 
 module.exports = function(deployer, network) {
-  deployer.deploy(Migrations).then((migrationsInstance) => {
+  deployer.deploy(Migrations).then(async (migrationsInstance) => {
     if (!tdr.isDryRunNetworkName(network)) {
-      return tdr.append(deployer.network_id, {
+      await tdr.append(deployer.network_id, {
         contractName: 'Migrations',
         address: Migrations.address,
         transactionHash: migrationsInstance.transactionHash
@@ -189,6 +189,28 @@ I recommend you create a new script entry in `package.json` so that you can easi
   "scripts": {
     "compile": "truffle compile && apply-registry build/contracts"
   }
+}
+```
+
+## 3. Retrieving Entries
+
+You can retrieve the last entry by contract name using the `findLastByContractName(networkId, contractName)` function.
+
+For example:
+
+```javascript
+const TestContract = artifacts.require('TestContract.sol')
+const tdr = require('truffle-deploy-registry')
+
+module.exports = function(deployer, networkName) {
+  deployer.then(async () => {
+    const entry = await tdr.findLastByContractName(deployer.network_id, 'Contract2')
+    deployer.deploy(TestContract, entry.address).then(instance => {
+      if (!tdr.isDryRunNetworkName(networkName)) {
+        await tdr.appendInstance(instance)
+      }
+    })
+  })
 }
 ```
 
