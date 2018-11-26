@@ -1,6 +1,6 @@
 {
   "name": "truffle-deploy-registry",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Store deployed contract addresses separately from Truffle artifacts.",
   "main": "lib/index.js",
   "scripts": {
