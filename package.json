@@ -1,6 +1,6 @@
 {
   "name": "truffle-deploy-registry",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Store deployed contract addresses separately from Truffle artifacts.",
   "main": "lib/index.js",
   "scripts": {
@@ -29,7 +29,9 @@
   "devDependencies": {
     "coveralls": "^3.0.2",
     "jest": "^23.6.0",
-    "mkdirp": "^0.5.1",
     "merge": ">=1.2.1"
+  },
+  "dependencies": {
+    "mkdirp": "^0.5.1"
   }
 }
