@@ -1,15 +1,15 @@
+<div align="center">
 <h1 align="center">Truffle Deploy Registry</h1>
 
 [![Coverage Status](https://coveralls.io/repos/github/MedXProtocol/truffle-deploy-registry/badge.svg?branch=master)](https://coveralls.io/github/MedXProtocol/truffle-deploy-registry?branch=master)
 [![Build Status](https://travis-ci.org/MedXProtocol/truffle-deploy-registry.svg?branch=master)](https://travis-ci.org/MedXProtocol/truffle-deploy-registry)
 
-<br>
-
 Store deployed contract addresses separately from Truffle artifacts, and merge the addresses into artifacts.
 
 This module is a complete re-write (with comprehensive tests!) of [truffle-migrate-off-chain](https://github.com/asselstine/truffle-migrate-off-chain)
+</div>
 
-<br><br>
+<br>
 
 # Motivation
 
@@ -17,7 +17,7 @@ Truffle is a fantastic tool for creating and deploying smart contracts. We neede
 
 Having the addresses separated by network allows us to ignore the local environment but commit the testnet and mainnet environments to the repository.  Our continuous deployment server can then re-compile the artifacts and use the `apply-registry` command to merge in the deployed (Ropsten, Mainnet, etc.) addresses.
 
-<br><br>
+<br>
 
 # Install
 
@@ -31,7 +31,7 @@ or
 $ yarn add truffle-deploy-registry -D
 ```
 
-<br><br>
+<br>
 
 # Configuration
 
@@ -88,7 +88,7 @@ $ apply-registry -i build/contracts -o build/output -n networks
 ```
 
 In this case, merged artifacts would appear in `build/output` instead of `build/contracts`.
-<br><br>
+<br>
 
 
 # Usage
@@ -279,7 +279,7 @@ module.exports = function(deployer, networkName) {
 }
 ```
 
-<br><br>
+<br>
 
 # Future Work
 
