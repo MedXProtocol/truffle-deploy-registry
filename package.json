@@ -9,6 +9,12 @@
     "test-watch": "jest --config=jest.config.js --watch",
     "publish-and-tag": "./scripts/publish.sh $npm_package_version"
   },
+  "jest": {
+    "projects": [
+      "<rootDir>/jest-test.config.js",
+      "<rootDir>/jest-eslint.config.js"
+    ]
+  },
   "bin": {
     "apply-registry": "./lib/command.js"
   },
