@@ -19,6 +19,12 @@ Having the addresses separated by network allows us to ignore the local environm
 $ npm install --save-dev truffle-deploy-registry
 ```
 
+or
+
+```
+$ yarn add truffle-deploy-registry -D
+```
+
 # Usage
 
 Truffle Deploy Registry works in two stages:
@@ -91,8 +97,10 @@ Note the use of `isDryRunNetworkName` to prevent appending to the registry when 
 After Truffle compiles your smart contracts, you can merge the deployed addresses into the artifact by calling `apply-registry` with the path to the artifacts.
 
 ```sh
-$ apply-registry build/contracts
+$ apply-registry
 ```
+
+By default, apply-registry will use the truffle default directories: './networks' and './build/contracts'. If you need to customize this see [apply-registry options](#apply-registry-options).
 
 This will pull in all of the network configs and add *the most recent* address for each contract by name from each configuration.  For example, if you have two configs:
 
@@ -140,7 +148,7 @@ networks/
 Then run `apply-registry`:
 
 ```sh
-$ apply-registry build/contracts
+$ apply-registry
 ```
 
 Your artifact will now be updated with the networks:
@@ -175,10 +183,12 @@ Your artifact will now be updated with the networks:
 }
 ```
 
-If you wish, you may also determine the output directory using the second argument:
+### apply-registry options
+
+If you wish, you may set the input artifacts, output artifacts and networks directories manually via command-line options. For example:
 
 ```sh
-$ apply-registry build/contracts build/output
+$ apply-registry -i build/contracts -o build/output -n networks
 ```
 
 And the merged artifacts will appear in `build/output`.
@@ -188,7 +198,7 @@ I recommend you create a new script entry in `package.json` so that you can easi
 ```json
 {
   "scripts": {
-    "compile": "truffle compile && apply-registry build/contracts"
+    "compile": "truffle compile && apply-registry"
   }
 }
 ```
