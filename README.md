@@ -35,8 +35,51 @@ configure the networks, input
 | `setNetworksPath(path)` | Sets a new networks path (ie. 'networks-two') |
 | `getNetworksPath()` | Returns the configured networks path (or the default networks path) |
 
+Example of using a different path for network configs:
+
+```javascript
+var tdr = require('truffle-deploy-registry')
+tdr.config.setNetworksPath('networks-two')
+
+const networkId = 3 // ropsten
+const contractName = 'SimpleToken'
+
+// Will search the ./networks-two directory for a file called 3.json, and if there
+// are multiple contract addresses listed for 'SimpleToken' it will return the most
+// recent address. (Networks files are sorted chronologically)
+const mostRecentAddress = findLastByContractName(networkId, contractName)
+
+// Example return:
+// {
+//   "contractName": "SimpleToken",
+//   "address": "0x8f0483125fcb9aaaefa9209d8e9d7b9c8b9fb90f",
+// }
+```
+
 You can also configure the input and output artifacts path via the config object,
 however those settings currently only affect the command line.
+
+## The `apply-registry` CLI Tool
+
+After Truffle compiles your smart contracts you can merge the deployed addresses
+into the artifacts by calling `apply-registry` from the terminal:
+
+```sh
+$ apply-registry
+```
+
+By default, apply-registry will use the truffle artifact directory './build/contracts' and the network config directory './networks'.
+
+### Customizing `apply-registry` Using Options
+
+You can configure the input-artifacts, output-artifacts and networks directories
+which apply-registry uses via the command line options. For example:
+
+```sh
+$ apply-registry -i build/contracts -o build/output -n networks
+```
+
+In this case, merged artifacts would appear in `build/output` instead of `build/contracts`.
 
 # Usage
 
@@ -113,7 +156,7 @@ After Truffle compiles your smart contracts, you can merge the deployed addresse
 $ apply-registry
 ```
 
-By default, apply-registry will use the truffle artifact directory './build/contracts' and the network config directory './networks'. If you need to customize this see [apply-registry options](#apply-registry-options).
+**NOTE: By default, apply-registry will use the truffle artifact directory './build/contracts' and the network config directory './networks'. If you need to customize this see [apply-registry options](#customizing-apply-registry-using-options)**
 
 This will pull in all of the network configs and add *the most recent* address for each contract by name from each configuration.  For example, if you have two configs:
 
@@ -164,9 +207,7 @@ Then run `apply-registry`:
 $ apply-registry
 ```
 
-Your artifact will now be updated with the networks:
-
-`build/contracts/Contract2.json`:
+Your artifact `build/contracts/Contract2.json` will now be updated with the networks:
 
 ```json
 {
@@ -195,16 +236,6 @@ Your artifact will now be updated with the networks:
   "updatedAt": "2018-09-19T21:37:52.903Z"
 }
 ```
-
-### apply-registry options
-
-If you wish, you may set the input artifacts, output artifacts and networks directories manually via command-line options. For example:
-
-```sh
-$ apply-registry -i build/contracts -o build/output -n networks
-```
-
-The merged artifacts would appear in `build/output` instead of `build/contracts`.
 
 It can help to create a new script entry in `package.json` so that you can easily combine compilation with merging:
 
