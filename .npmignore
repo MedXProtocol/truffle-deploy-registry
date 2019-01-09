@@ -1,0 +1,7 @@
+__stubs__
+__tests__
+.travis.yml
+jest.config.js
+scripts
+.gitignore
+coverage

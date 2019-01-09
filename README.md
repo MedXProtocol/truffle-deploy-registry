@@ -1,4 +1,5 @@
-# Truffle Deploy Registry
+<div align="center">
+<h1 align="center">Truffle Deploy Registry</h1>
 
 [![Coverage Status](https://coveralls.io/repos/github/MedXProtocol/truffle-deploy-registry/badge.svg?branch=master)](https://coveralls.io/github/MedXProtocol/truffle-deploy-registry?branch=master)
 [![Build Status](https://travis-ci.org/MedXProtocol/truffle-deploy-registry.svg?branch=master)](https://travis-ci.org/MedXProtocol/truffle-deploy-registry)
@@ -6,6 +7,9 @@
 Store deployed contract addresses separately from Truffle artifacts, and merge the addresses into artifacts.
 
 This module is a complete re-write (with comprehensive tests!) of [truffle-migrate-off-chain](https://github.com/asselstine/truffle-migrate-off-chain)
+</div>
+
+<br>
 
 # Motivation
 
@@ -13,7 +17,9 @@ Truffle is a fantastic tool for creating and deploying smart contracts. We neede
 
 Having the addresses separated by network allows us to ignore the local environment but commit the testnet and mainnet environments to the repository.  Our continuous deployment server can then re-compile the artifacts and use the `apply-registry` command to merge in the deployed (Ropsten, Mainnet, etc.) addresses.
 
-# Setup
+<br>
+
+# Install
 
 ```
 $ npm install --save-dev truffle-deploy-registry
@@ -25,6 +31,68 @@ or
 $ yarn add truffle-deploy-registry -D
 ```
 
+<br>
+
+# Configuration
+
+If you are using this library via JS (instead of via the command line) you can
+configure the networks, input
+
+| Command | Description |
+| --- | --- |
+| `setNetworksPath(path)` | Sets a new networks path (ie. 'networks-two') |
+| `getNetworksPath()` | Returns the configured networks path (or the default networks path) |
+
+Example of using a different path for network configs:
+
+```javascript
+var tdr = require('truffle-deploy-registry')
+tdr.config.setNetworksPath('networks-two')
+
+const networkId = 3 // ropsten
+const contractName = 'SimpleToken'
+
+// Will search the ./networks-two directory for a file called 3.json, and if there
+// are multiple contract addresses listed for 'SimpleToken' it will return the most
+// recent address. (Networks files are sorted chronologically)
+const mostRecentAddress = findLastByContractName(networkId, contractName)
+
+// Example return:
+// {
+//   "contractName": "SimpleToken",
+//   "address": "0x8f0483125fcb9aaaefa9209d8e9d7b9c8b9fb90f",
+// }
+```
+
+You can also configure the input and output artifacts path via the config object,
+however those settings currently only affect the command line.
+
+<br>
+
+### The `apply-registry` CLI Tool
+
+After Truffle compiles your smart contracts you can merge the deployed addresses
+into the artifacts by calling `apply-registry` from the terminal:
+
+```sh
+$ apply-registry
+```
+
+By default, apply-registry will use the truffle artifact directory './build/contracts' and the network config directory './networks'.
+
+##### Customizing `apply-registry` Using Options
+
+You can configure the input-artifacts, output-artifacts and networks directories
+which apply-registry uses via the command line options. For example:
+
+```sh
+$ apply-registry -i build/contracts -o build/output -n networks
+```
+
+In this case, merged artifacts would appear in `build/output` instead of `build/contracts`.
+
+<br>
+
 # Usage
 
 Truffle Deploy Registry works in two stages:
@@ -32,7 +100,7 @@ Truffle Deploy Registry works in two stages:
 1. New deployment entries are recorded in a network-specific JSON file.
 2. The latest deployment entries are merged with the truffle artifacts after compilation.
 
-## 1. Network files
+### 1. Network files
 
 Truffle Deploy Registry stores contract addresses in JSON files in the `networks/` directory.  For example, if you deploy to `mainnet` and `ropsten` your networks directory may look like:
 
@@ -92,7 +160,7 @@ module.exports = function(deployer, network) {
 
 Note the use of `isDryRunNetworkName` to prevent appending to the registry when doing a dry run.
 
-## 2. Merging network addresses into artifacts
+### 2. Merging network addresses into artifacts
 
 After Truffle compiles your smart contracts, you can merge the deployed addresses into the artifacts by calling `apply-registry` from the terminal:
 
@@ -100,7 +168,7 @@ After Truffle compiles your smart contracts, you can merge the deployed addresse
 $ apply-registry
 ```
 
-By default, apply-registry will use the truffle default directories: './networks' and './build/contracts'. If you need to customize this see [apply-registry options](#apply-registry-options).
+**NOTE: By default, apply-registry will use the truffle artifact directory './build/contracts' and the network config directory './networks'. If you need to customize this see [apply-registry options](#customizing-apply-registry-using-options)**
 
 This will pull in all of the network configs and add *the most recent* address for each contract by name from each configuration.  For example, if you have two configs:
 
@@ -151,9 +219,7 @@ Then run `apply-registry`:
 $ apply-registry
 ```
 
-Your artifact will now be updated with the networks:
-
-`build/contracts/Contract2.json`:
+Your artifact `build/contracts/Contract2.json` will now be updated with the networks:
 
 ```json
 {
@@ -183,16 +249,6 @@ Your artifact will now be updated with the networks:
 }
 ```
 
-### apply-registry options
-
-If you wish, you may set the input artifacts, output artifacts and networks directories manually via command-line options. For example:
-
-```sh
-$ apply-registry -i build/contracts -o build/output -n networks
-```
-
-The merged artifacts would appear in `build/output` instead of `build/contracts`.
-
 It can help to create a new script entry in `package.json` so that you can easily combine compilation with merging:
 
 ```json
@@ -203,7 +259,7 @@ It can help to create a new script entry in `package.json` so that you can easil
 }
 ```
 
-## 3. Retrieving Entries
+### 3. Retrieving Entries
 
 You can retrieve the last entry by contract name using the `findLastByContractName(networkId, contractName)` function.
 
@@ -224,6 +280,8 @@ module.exports = function(deployer, networkName) {
   })
 }
 ```
+
+<br>
 
 # Future Work
 
