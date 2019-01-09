@@ -21,7 +21,9 @@ module.exports = {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: null,
+  // collectCoverageFrom: [
+  //   "**/*.{js,jsx}"
+  // ],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
@@ -112,7 +114,9 @@ module.exports = {
   // ],
 
   // Allows you to use a custom runner instead of Jest's default test runner
-  // runner: "jest-runner",
+  // runner: 'jest-runner-eslint',
+
+  displayName: 'test',
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
   // setupFiles: [],
@@ -138,9 +142,9 @@ module.exports = {
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  // testPathIgnorePatterns: [
-  //   "/node_modules/"
-  // ],
+  testPathIgnorePatterns: [
+    "/node_modules/"
+  ],
 
   // The regexp pattern Jest uses to detect test files
   // testRegex: "",
