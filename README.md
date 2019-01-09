@@ -1,17 +1,23 @@
-# Truffle Deploy Registry
+<h1 align="center">Truffle Deploy Registry</h1>
 
 [![Coverage Status](https://coveralls.io/repos/github/MedXProtocol/truffle-deploy-registry/badge.svg?branch=master)](https://coveralls.io/github/MedXProtocol/truffle-deploy-registry?branch=master)
 [![Build Status](https://travis-ci.org/MedXProtocol/truffle-deploy-registry.svg?branch=master)](https://travis-ci.org/MedXProtocol/truffle-deploy-registry)
 
+<br>
+
 Store deployed contract addresses separately from Truffle artifacts, and merge the addresses into artifacts.
 
 This module is a complete re-write (with comprehensive tests!) of [truffle-migrate-off-chain](https://github.com/asselstine/truffle-migrate-off-chain)
+
+<br><br>
 
 # Motivation
 
 Truffle is a fantastic tool for creating and deploying smart contracts. We needed a way to commit deployed contract addresses as part of the repository without committing the Truffle artifacts, as they contain paths specific to each developer's filesystem.
 
 Having the addresses separated by network allows us to ignore the local environment but commit the testnet and mainnet environments to the repository.  Our continuous deployment server can then re-compile the artifacts and use the `apply-registry` command to merge in the deployed (Ropsten, Mainnet, etc.) addresses.
+
+<br><br>
 
 # Install
 
@@ -24,6 +30,8 @@ or
 ```
 $ yarn add truffle-deploy-registry -D
 ```
+
+<br><br>
 
 # Configuration
 
@@ -59,7 +67,7 @@ const mostRecentAddress = findLastByContractName(networkId, contractName)
 You can also configure the input and output artifacts path via the config object,
 however those settings currently only affect the command line.
 
-## The `apply-registry` CLI Tool
+### The `apply-registry` CLI Tool
 
 After Truffle compiles your smart contracts you can merge the deployed addresses
 into the artifacts by calling `apply-registry` from the terminal:
@@ -70,7 +78,7 @@ $ apply-registry
 
 By default, apply-registry will use the truffle artifact directory './build/contracts' and the network config directory './networks'.
 
-### Customizing `apply-registry` Using Options
+##### Customizing `apply-registry` Using Options
 
 You can configure the input-artifacts, output-artifacts and networks directories
 which apply-registry uses via the command line options. For example:
@@ -80,6 +88,8 @@ $ apply-registry -i build/contracts -o build/output -n networks
 ```
 
 In this case, merged artifacts would appear in `build/output` instead of `build/contracts`.
+<br><br>
+
 
 # Usage
 
@@ -88,7 +98,7 @@ Truffle Deploy Registry works in two stages:
 1. New deployment entries are recorded in a network-specific JSON file.
 2. The latest deployment entries are merged with the truffle artifacts after compilation.
 
-## 1. Network files
+### 1. Network files
 
 Truffle Deploy Registry stores contract addresses in JSON files in the `networks/` directory.  For example, if you deploy to `mainnet` and `ropsten` your networks directory may look like:
 
@@ -148,7 +158,7 @@ module.exports = function(deployer, network) {
 
 Note the use of `isDryRunNetworkName` to prevent appending to the registry when doing a dry run.
 
-## 2. Merging network addresses into artifacts
+### 2. Merging network addresses into artifacts
 
 After Truffle compiles your smart contracts, you can merge the deployed addresses into the artifacts by calling `apply-registry` from the terminal:
 
@@ -247,7 +257,7 @@ It can help to create a new script entry in `package.json` so that you can easil
 }
 ```
 
-## 3. Retrieving Entries
+### 3. Retrieving Entries
 
 You can retrieve the last entry by contract name using the `findLastByContractName(networkId, contractName)` function.
 
@@ -268,6 +278,8 @@ module.exports = function(deployer, networkName) {
   })
 }
 ```
+
+<br><br>
 
 # Future Work
 
