@@ -13,7 +13,7 @@ Truffle is a fantastic tool for creating and deploying smart contracts. We neede
 
 Having the addresses separated by network allows us to ignore the local environment but commit the testnet and mainnet environments to the repository.  Our continuous deployment server can then re-compile the artifacts and use the `apply-registry` command to merge in the deployed (Ropsten, Mainnet, etc.) addresses.
 
-# Setup
+# Install
 
 ```
 $ npm install --save-dev truffle-deploy-registry
@@ -24,6 +24,19 @@ or
 ```
 $ yarn add truffle-deploy-registry -D
 ```
+
+# Configuration
+
+If you are using this library via JS (instead of via the command line) you can
+configure the networks, input
+
+| Command | Description |
+| --- | --- |
+| `setNetworksPath(path)` | Sets a new networks path (ie. 'networks-two') |
+| `getNetworksPath()` | Returns the configured networks path (or the default networks path) |
+
+You can also configure the input and output artifacts path via the config object,
+however those settings currently only affect the command line.
 
 # Usage
 
@@ -100,7 +113,7 @@ After Truffle compiles your smart contracts, you can merge the deployed addresse
 $ apply-registry
 ```
 
-By default, apply-registry will use the truffle default directories: './networks' and './build/contracts'. If you need to customize this see [apply-registry options](#apply-registry-options).
+By default, apply-registry will use the truffle artifact directory './build/contracts' and the network config directory './networks'. If you need to customize this see [apply-registry options](#apply-registry-options).
 
 This will pull in all of the network configs and add *the most recent* address for each contract by name from each configuration.  For example, if you have two configs:
 
