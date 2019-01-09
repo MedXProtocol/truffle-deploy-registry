@@ -67,6 +67,8 @@ const mostRecentAddress = findLastByContractName(networkId, contractName)
 You can also configure the input and output artifacts path via the config object,
 however those settings currently only affect the command line.
 
+<br>
+
 ### The `apply-registry` CLI Tool
 
 After Truffle compiles your smart contracts you can merge the deployed addresses
@@ -88,8 +90,8 @@ $ apply-registry -i build/contracts -o build/output -n networks
 ```
 
 In this case, merged artifacts would appear in `build/output` instead of `build/contracts`.
-<br>
 
+<br>
 
 # Usage
 
