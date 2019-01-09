@@ -11,7 +11,7 @@ This module is a complete re-write (with comprehensive tests!) of [truffle-migra
 
 Truffle is a fantastic tool for creating and deploying smart contracts. We needed a way to commit deployed contract addresses as part of the repository without committing the Truffle artifacts, as they contain paths specific to each developer's filesystem.
 
-Having the addresses separated by network allows us to ignore the local environment but commit the testnet and mainnet environments to the repository.  Our continuous deployment server can then re-compile the artifacts and use the `applt-registry` command to merge in the deployed (Ropsten, Mainnet, etc.) addresses.
+Having the addresses separated by network allows us to ignore the local environment but commit the testnet and mainnet environments to the repository.  Our continuous deployment server can then re-compile the artifacts and use the `apply-registry` command to merge in the deployed (Ropsten, Mainnet, etc.) addresses.
 
 # Setup
 
