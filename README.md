@@ -9,9 +9,9 @@ This module is a complete re-write (with comprehensive tests!) of [truffle-migra
 
 # Motivation
 
-Truffle is a fantastic tool for creating and deploying smart contracts.   I wanted a way to commit deployed contract addresses as part of the repository without committing the Truffle artifacts, as they contain paths specific to the developer's filesystem.
+Truffle is a fantastic tool for creating and deploying smart contracts. We needed a way to commit deployed contract addresses as part of the repository without committing the Truffle artifacts, as they contain paths specific to each developer's filesystem.
 
-Having the addresses separated by network allows us to ignore the local environment but commit the testnet and mainnet environments to the repository.  Our continuous deployment server can then re-compile the artifacts and merge in the deployed addresses.
+Having the addresses separated by network allows us to ignore the local environment but commit the testnet and mainnet environments to the repository.  Our continuous deployment server can then re-compile the artifacts and use the `applt-registry` command to merge in the deployed (Ropsten, Mainnet, etc.) addresses.
 
 # Setup
 
@@ -94,7 +94,7 @@ Note the use of `isDryRunNetworkName` to prevent appending to the registry when 
 
 ## 2. Merging network addresses into artifacts
 
-After Truffle compiles your smart contracts, you can merge the deployed addresses into the artifact by calling `apply-registry` with the path to the artifacts.
+After Truffle compiles your smart contracts, you can merge the deployed addresses into the artifacts by calling `apply-registry` from the terminal:
 
 ```sh
 $ apply-registry
@@ -191,9 +191,9 @@ If you wish, you may set the input artifacts, output artifacts and networks dire
 $ apply-registry -i build/contracts -o build/output -n networks
 ```
 
-And the merged artifacts will appear in `build/output`.
+The merged artifacts would appear in `build/output` instead of `build/contracts`.
 
-I recommend you create a new script entry in `package.json` so that you can easily combine compilation with merging:
+It can help to create a new script entry in `package.json` so that you can easily combine compilation with merging:
 
 ```json
 {
