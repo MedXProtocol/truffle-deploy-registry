@@ -4,10 +4,10 @@
   "description": "Store deployed contract addresses separately from Truffle artifacts.",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint .",
-    "test": "jest --config=jest.config.js",
-    "test-watch": "jest --config=jest.config.js --watch",
-    "publish-and-tag": "./scripts/publish.sh $npm_package_version"
+    "lint": "jest --config=jest-eslint.config.js",
+    "test": "jest --config=jest-test.config.js",
+    "test-watch": "jest --config=jest-test.config.js --watch",
+    "publish-and-tag": "yarn lint && ./scripts/publish.sh $npm_package_version"
   },
   "jest": {
     "projects": [
@@ -46,6 +46,7 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "commander": "^2.19.0",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.3"
   }
 }
