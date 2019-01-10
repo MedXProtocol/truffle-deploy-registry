@@ -259,6 +259,32 @@ It can help to create a new script entry in `package.json` so that you can easil
 }
 ```
 
+##### Another Use Case
+
+Some of our contract projects use ZeppelinOS. While ZOS has many upsides (easily upgradeable contracts being a huge one, guards against destroying deployed memory addresses, etc) we've found the need to manually copy over contract addresses both in development and on testnets/mainnet.
+
+The `apply-registry` tool will generate new artifacts in the output artifacts directory even if there are no input artifacts. The workflow for this is as follows:
+
+1. Deploy contracts using ZOS to local ganache, ropsten, etc.
+
+2. Manually copy the deployed contract names and addresses to a new networks file in our dapp directory. For instance, the networks file: `./networks/3.json` would have entries as such (where the lowest entry address **'0xae399886...'** is the most recent deployed version):
+
+  ```javascript
+  [
+    {
+      "contractName": "SimpleToken",
+      "address": "0x8f0483125fcb9aaaefa9209d8e9d7b9c8b9fb90f"
+    },
+    {
+      "contractName": "SimpleToken",
+      "address": "0xae39986e9876c91a936adfae8b6a98e764aeeb7a"
+    }
+  ]
+  ```
+
+3. Run `apply-registry` and it will generate the SimpleToken.json artifact in **'./build/contracts'**, ready for the dapp to use.
+4. To get the ABI, use npm or yarn's `link` command. Or, if the contracts are published on npm simply add the contracts package to your `package.json` and install.
+
 ### 3. Retrieving Entries
 
 You can retrieve the last entry by contract name using the `findLastByContractName(networkId, contractName)` function.
